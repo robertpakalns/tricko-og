@@ -3,6 +3,8 @@ use std::{
     net::{TcpListener, TcpStream},
 };
 
+mod parse_raw_path;
+
 fn create_html(title: &str, desc: &str, img: &str, color: &str) -> String {
     format!(
         "<html>\
@@ -16,6 +18,15 @@ fn create_html(title: &str, desc: &str, img: &str, color: &str) -> String {
     )
 }
 
+fn default_html() -> String {
+    create_html(
+        "Tricko.pro",
+        "Tricko.pro — Best Stats Site!",
+        "/assets/icon.webp",
+        "#ffffff",
+    )
+}
+
 fn get_html(path: &str) -> String {
     match path {
         "/redline" => create_html(
@@ -24,12 +35,7 @@ fn get_html(path: &str) -> String {
             "/icons/redline.png",
             "#9c2220",
         ),
-        _ => create_html(
-            "Tricko.pro",
-            "Tricko.pro - Best Stats Site!",
-            "/assets/icon.webp",
-            "#ffffff",
-        ),
+        _ => default_html(),
     }
 }
 
@@ -41,13 +47,19 @@ fn handle_client(mut stream: TcpStream) {
         }
 
         let request = String::from_utf8_lossy(&buffer[..bytes_read]);
-        let path = request
+        let raw_path = request
             .lines()
             .next()
             .and_then(|line| line.split_whitespace().nth(1))
             .unwrap_or("/");
 
-        let html = get_html(path);
+        let (path, _) = parse_raw_path::parse(raw_path);
+
+        let html = match path {
+            Some(p) => get_html(p),
+            None => default_html(),
+        };
+
         let content_length = html.len();
 
         let response = format!(
