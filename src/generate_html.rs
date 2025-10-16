@@ -20,7 +20,7 @@ fn default_html() -> String {
     )
 }
 
-// Not implemented yet: dynamic cyheck for /cryzen/player/:name or /cryzen/leaderboard/?query
+// Not fully implemented yet: dynamic check for /cryzen/player/:name or /cryzen/leaderboard/?query
 fn cryzen_html(path: &str) -> String {
     let h = |name: &str, desc: &str| create_html(name, desc, "/icons/games/cryzen.png", "#443d35");
 
@@ -41,6 +41,53 @@ fn cryzen_html(path: &str) -> String {
             "Cryzen.io Changelog",
             "View the latest updates in Cryzen.io",
         ),
+        _ => default_html(),
+    }
+}
+
+fn vectaria_html(path: &str) -> String {
+    let h =
+        |name: &str, desc: &str| create_html(name, desc, "/icons/games/vectaria.png", "#f1ad91");
+
+    match path {
+        "/vectaria" => h(
+            "Vectaria.io",
+            "A free browser game similar to Minecraft. Engage in building, crafting, digging, and much more",
+        ),
+        "/vectaria/player" => h(
+            "Vectaria.io Player Search",
+            "Browse Vectaria.io players and view their in-game stats",
+        ),
+        p if p.starts_with("/vectaria/player/") => {
+            match p.strip_prefix("/vectaria/player/").unwrap_or("") {
+                "" => h(
+                    "Vectaria.io Player Search",
+                    "Browse Vectaria.io players and view their in-game stats",
+                ),
+                name => h(name, &format!("View stats for Vectaria.io player {name}")),
+            }
+        }
+        "/vectaria/server" => h(
+            "Vectaria.io Server Search",
+            "Browse Vectaria.io servers and view information about them",
+        ),
+        p if p.starts_with("/vectaria/server/") => {
+            match p.strip_prefix("/vectaria/server/").unwrap_or("") {
+                "" => h(
+                    "Vectaria.io Server Search",
+                    "Browse Vectaria.io servers and view information about them",
+                ),
+                id => {
+                    let id_uppercase = &id.to_uppercase();
+                    h(
+                        id_uppercase,
+                        &format!(
+                            "View information about Vectaria.io server with ID #{id_uppercase}"
+                        ),
+                    )
+                }
+            }
+        }
         _ => default_html(),
     }
 }
@@ -97,6 +144,7 @@ fn voxtulate_html(path: &str) -> String {
 pub fn get_html(path: Option<&str>) -> String {
     match path {
         Some(p) if p.starts_with("/cryzen") => cryzen_html(p),
+        Some(p) if p.starts_with("/vectaria") => vectaria_html(p),
         Some(p) if p.starts_with("/redline") => redline_html(p),
         Some(p) if p.starts_with("/voxtulate") => voxtulate_html(p),
         _ => default_html(),
