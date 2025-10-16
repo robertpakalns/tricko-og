@@ -22,72 +22,73 @@ fn default_html() -> String {
 
 // Not implemented yet: dynamic cyheck for /cryzen/player/:name or /cryzen/leaderboard/?query
 fn cryzen_html(path: &str) -> String {
+    let h = |name: &str, desc: &str| create_html(name, desc, "/icons/games/cryzen.png", "#443d35");
+
     match path {
-        "/cryzen" => create_html(
+        "/cryzen" => h(
             "Cryzen.io",
             "Engage in an epic online multiplayer shooter experience. Play instantly with no downloads",
-            "/icons/games/cryzen.png",
-            "#443d35",
         ),
-        "/cryzen/player" => create_html(
+        "/cryzen/player" => h(
             "Cryzen.io Player Search",
             "Browse Cryzen.io players and view their in-game stats",
-            "/icons/games/cryzen.png",
-            "#443d35",
         ),
-        "/cryzen/leaderboard" => create_html(
+        "/cryzen/leaderboard" => h(
             "Cryzen.io Leaderboard Search",
             "Browse Cryzen.io leaderboards by various stats",
-            "/icons/games/cryzen.png",
-            "#443d35",
         ),
-        "/cryzen/changelog" => create_html(
+        "/cryzen/changelog" => h(
             "Cryzen.io Changelog",
             "View the latest updates in Cryzen.io",
-            "/icons/games/cryzen.png",
-            "#443d35",
         ),
         _ => default_html(),
     }
 }
 
 fn redline_html(path: &str) -> String {
+    let h = |name: &str, desc: &str| create_html(name, desc, "/icons/redline.png", "#9c2220");
+
     match path {
-        "/redline" => create_html(
-            "Redline Client",
-            "Unofficial Electron client for Kirka.io",
-            "/icons/redline.png",
-            "#9c2220",
-        ),
-        "/redline/changelog" => create_html(
+        "/redline" => h("Redline Client", "Unofficial Electron client for Kirka.io"),
+        "/redline/changelog" => h(
             "Redline Client Changelog",
             "View the latest updates in the Redline Client",
-            "/icons/redline.png",
-            "#9c2220",
         ),
-        "/redline/privacy" => create_html(
+        "/redline/privacy" => h(
             "Redline Client Privacy Policy",
             "Before using the Redline Client, review its Privacy Policy",
-            "/icons/redline.png",
-            "#9c2220",
+        ),
+        "/redline/discord" => h(
+            "Redline Client Discord Server",
+            "Join the Redline Client community on Discord",
+        ),
+        "/redline/github" => h(
+            "Redline Client GitHub",
+            "View the Redline Client source code on GitHub",
         ),
         _ => default_html(),
     }
 }
 
 fn voxtulate_html(path: &str) -> String {
+    let h = |name: &str, desc: &str| create_html(name, desc, "/icons/voxtulate.png", "#7b7b7b");
+
     match path {
-        "/voxtulate" => create_html(
+        "/voxtulate" => h(
             "Voxtulate Client",
             "Unofficial Electron client for Voxiom.io",
-            "/icons/voxtulate.png",
-            "#7b7b7b",
         ),
-        "/voxtulate/changelog" => create_html(
+        "/voxtulate/changelog" => h(
             "Voxtulate Client Changelog",
             "View the latest updates in the Voxtulate Client",
-            "/icons/voxtulate.png",
-            "#7b7b7b",
+        ),
+        "/voxtulate/discord" => h(
+            "Voxtulate Client Discord Server",
+            "Join the Voxtulate Client community on Discord",
+        ),
+        "/voxtulate/github" => h(
+            "Voxtulate Client GitHub",
+            "View the Voxtulate Client source code on GitHub",
         ),
         _ => default_html(),
     }
