@@ -3,41 +3,8 @@ use std::{
     net::{TcpListener, TcpStream},
 };
 
+mod generate_html;
 mod parse_raw_path;
-
-fn create_html(title: &str, desc: &str, img: &str, color: &str) -> String {
-    format!(
-        "<html>\
-            <head>\
-                <meta property=\"og:title\" content=\"{title}\" />\
-                <meta property=\"og:description\" content=\"{desc}\" />\
-                <meta property=\"og:image\" content=\"{img}\" />\
-                <meta name=\"theme-color\" content=\"{color}\" />\
-            </head>\
-        </html>"
-    )
-}
-
-fn default_html() -> String {
-    create_html(
-        "Tricko.pro",
-        "Tricko.pro — Best Stats Site!",
-        "/assets/icon.webp",
-        "#ffffff",
-    )
-}
-
-fn get_html(path: &str) -> String {
-    match path {
-        "/redline" => create_html(
-            "Redline Client",
-            "Unofficial Electron client for Kirka.io",
-            "/icons/redline.png",
-            "#9c2220",
-        ),
-        _ => default_html(),
-    }
-}
 
 fn handle_client(mut stream: TcpStream) {
     let mut buffer = [0; 1024];
@@ -55,10 +22,7 @@ fn handle_client(mut stream: TcpStream) {
 
         let (path, _) = parse_raw_path::parse(raw_path);
 
-        let html = match path {
-            Some(p) => get_html(p),
-            None => default_html(),
-        };
+        let html = generate_html::get_html(path);
 
         let content_length = html.len();
 
