@@ -23,7 +23,7 @@ jobs:
       #     tool: cross
 
       # - run: cross build --release --target x86_64-unknown-linux-musl
-      - run: cross build -r
+      - run: cargo build -r
 
       # - run: cp target/x86_64-unknown-linux-musl/release/tricko-api ./tricko-api
       - run: cp target/release/tricko-og ./tricko-og
