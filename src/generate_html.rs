@@ -30,6 +30,8 @@ pub fn default_html(path: &str) -> String {
 
 pub fn get_html(path: Option<&str>, query: Vec<(&str, &str)>) -> String {
     let path = path.unwrap_or("/").trim_end_matches('/');
+
+    println!("get_html: '{path}'");
     match path {
         p if p.starts_with("/cryzen") => routes::cryzen::html(p, query),
         p if p.starts_with("/kirka") => routes::kirka::html(p),
