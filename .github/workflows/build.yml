@@ -26,7 +26,7 @@ jobs:
       - run: cross build -r
 
       # - run: cp target/x86_64-unknown-linux-musl/release/tricko-api ./tricko-api
-      - run: cp target/release/tricko-api ./tricko-og
+      - run: cp target/release/tricko-og ./tricko-og
 
       - uses: appleboy/ssh-action@v1
         with:
