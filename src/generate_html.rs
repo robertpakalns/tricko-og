@@ -28,16 +28,15 @@ pub fn default_html(path: &str) -> String {
     )
 }
 
-// It does not handle routes with a slash at the end: e.g., /redline and /redline/ should return be the same OG
 pub fn get_html(path: Option<&str>, query: Vec<(&str, &str)>) -> String {
+    let path = path.unwrap_or("/").trim_end_matches('/');
     match path {
-        Some(p) if p.starts_with("/cryzen") => routes::cryzen::html(p, query),
-        Some(p) if p.starts_with("/kirka") => routes::kirka::html(p),
-        Some(p) if p.starts_with("/redline") => routes::redline::html(p),
-        Some(p) if p.starts_with("/vectaria") => routes::vectaria::html(p),
-        Some(p) if p.starts_with("/voxiom") => routes::voxiom::html(p, query),
-        Some(p) if p.starts_with("/voxtulate") => routes::voxtulate::html(p),
-        Some(p) => routes::tricko::html(p),
-        _ => default_html(path.unwrap_or("/")),
+        p if p.starts_with("/cryzen") => routes::cryzen::html(p, query),
+        p if p.starts_with("/kirka") => routes::kirka::html(p),
+        p if p.starts_with("/redline") => routes::redline::html(p),
+        p if p.starts_with("/vectaria") => routes::vectaria::html(p),
+        p if p.starts_with("/voxiom") => routes::voxiom::html(p, query),
+        p if p.starts_with("/voxtulate") => routes::voxtulate::html(p),
+        p => routes::tricko::html(p),
     }
 }
