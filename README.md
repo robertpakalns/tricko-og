@@ -5,4 +5,5 @@ A simple backend server that returns HTML for Open Graph (OG) bots. This can be 
 * `og:title`
 * `og:description`
 * `og:image`
+* `og:url`
 * `theme-color`

@@ -1,20 +1,26 @@
 use crate::routes;
 
-pub fn create_html(title: &str, desc: &str, img: &str, color: &str) -> String {
+static BASE_URL: &str = "https://tricko.pro";
+
+pub fn create_html(path: &str, title: &str, desc: &str, img: &str, color: &str) -> String {
     format!(
         "<html>\
             <head>\
                 <meta property=\"og:title\" content=\"{title}\" />\
                 <meta property=\"og:description\" content=\"{desc}\" />\
-                <meta property=\"og:image\" content=\"{img}\" />\
+                <meta property=\"og:image\" content=\"{}\" />\
+                <meta property=\"og:url\" content=\"{}\" />\
                 <meta name=\"theme-color\" content=\"{color}\" />\
             </head>\
-        </html>"
+        </html>",
+        format!("{BASE_URL}{img}"),
+        format!("{BASE_URL}{path}"),
     )
 }
 
-pub fn default_html() -> String {
+pub fn default_html(path: &str) -> String {
     create_html(
+        path,
         "Tricko.pro",
         "The best stats site! Explore content for Cryzen.io, Kirka.io, Vectaria.io, and Voxiom.io, as well as the Redline and Voxtulate clients",
         "/assets/icon.webp",
@@ -32,6 +38,6 @@ pub fn get_html(path: Option<&str>, query: Vec<(&str, &str)>) -> String {
         Some(p) if p.starts_with("/voxiom") => routes::voxiom::html(p, query),
         Some(p) if p.starts_with("/voxtulate") => routes::voxtulate::html(p),
         Some(p) => routes::tricko::html(p),
-        _ => default_html(),
+        _ => default_html(path.unwrap_or("/")),
     }
 }
