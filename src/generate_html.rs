@@ -23,13 +23,13 @@ pub fn default_html() -> String {
 }
 
 // It does not handle routes with a slash at the end: e.g., /redline and /redline/ should return be the same OG
-pub fn get_html(path: Option<&str>) -> String {
+pub fn get_html(path: Option<&str>, query: Vec<(&str, &str)>) -> String {
     match path {
-        Some(p) if p.starts_with("/cryzen") => routes::cryzen::html(p),
+        Some(p) if p.starts_with("/cryzen") => routes::cryzen::html(p, query),
         Some(p) if p.starts_with("/kirka") => routes::kirka::html(p),
         Some(p) if p.starts_with("/redline") => routes::redline::html(p),
         Some(p) if p.starts_with("/vectaria") => routes::vectaria::html(p),
-        Some(p) if p.starts_with("/voxiom") => routes::voxiom::html(p),
+        Some(p) if p.starts_with("/voxiom") => routes::voxiom::html(p, query),
         Some(p) if p.starts_with("/voxtulate") => routes::voxtulate::html(p),
         Some(p) => routes::tricko::html(p),
         _ => default_html(),

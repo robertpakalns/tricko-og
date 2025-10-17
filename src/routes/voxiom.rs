@@ -4,8 +4,7 @@ fn base(name: &str, desc: &str) -> String {
     create_html(name, desc, "/icons/games/voxiom.png", "#6b824c")
 }
 
-// Not fully implemented yet: dynamic check for /voxiom/leaderboard/parameters?query
-pub fn html(path: &str) -> String {
+pub fn html(path: &str, query: Vec<(&str, &str)>) -> String {
     match path {
         "/voxiom" => base(
             "Voxiom.io",
@@ -44,6 +43,25 @@ pub fn html(path: &str) -> String {
             "Voxiom.io Leaderboard Search",
             "Browse Voxiom.io leaderboards by various stats",
         ),
+        p if p.starts_with("/voxiom/leaderboard/") => {
+            let query_str = query
+                .into_iter()
+                .filter(|(k, v)| !k.is_empty() && !v.is_empty())
+                .map(|(k, v)| format!("{k}={v}"))
+                .collect::<Vec<String>>()
+                .join(" | ");
+
+            match query_str.as_str() {
+                q if q.is_empty() => base(
+                    "Voxiom.io Leaderboard Search",
+                    "Browse Voxiom.io leaderboards by various stats",
+                ),
+                q => base(
+                    "Voxiom.io Leaderboard",
+                    &format!("Browse Voxiom.io leaderboard with parameters {q}"),
+                ),
+            }
+        }
         "/voxiom/match" => base(
             "Voxiom.io Match Search",
             "Browse Voxiom.io Capture The Games and Battle Royale matches and view information about them",

@@ -4,8 +4,7 @@ fn base(name: &str, desc: &str) -> String {
     create_html(name, desc, "/icons/games/cryzen.png", "#443d35")
 }
 
-// Not fully implemented yet: dynamic check for /cryzen/leaderboard/parameters?query
-pub fn html(path: &str) -> String {
+pub fn html(path: &str, query: Vec<(&str, &str)>) -> String {
     match path {
         "/cryzen" => base(
             "Cryzen.io",
@@ -28,6 +27,25 @@ pub fn html(path: &str) -> String {
             "Cryzen.io Leaderboard Search",
             "Browse Cryzen.io leaderboards by various stats",
         ),
+        p if p.starts_with("/cryzen/leaderboard/") => {
+            let query_str = query
+                .into_iter()
+                .filter(|(k, v)| !k.is_empty() && !v.is_empty())
+                .map(|(k, v)| format!("{k}={v}"))
+                .collect::<Vec<String>>()
+                .join(" | ");
+
+            match query_str.as_str() {
+                q if q.is_empty() => base(
+                    "Cryzen.io Leaderboard Search",
+                    "Browse Cryzen.io leaderboards by various stats",
+                ),
+                q => base(
+                    "Cryzen.io Leaderboard",
+                    &format!("Browse Cryzen.io leaderboard with parameters {q}"),
+                ),
+            }
+        }
         "/cryzen/changelog" => base(
             "Cryzen.io Changelog",
             "View the latest updates in Cryzen.io",

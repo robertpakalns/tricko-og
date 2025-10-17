@@ -21,9 +21,9 @@ fn handle_client(mut stream: TcpStream) {
             .and_then(|line| line.split_whitespace().nth(1))
             .unwrap_or("/");
 
-        let (path, _) = parse_raw_path::parse(raw_path);
+        let (path, query) = parse_raw_path::parse(raw_path);
 
-        let html = generate_html::get_html(path);
+        let html = generate_html::get_html(path, query);
 
         let content_length = html.len();
 
