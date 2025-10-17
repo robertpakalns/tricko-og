@@ -27,8 +27,9 @@ pub fn get_html(path: Option<&str>) -> String {
     match path {
         Some(p) if p.starts_with("/cryzen") => routes::cryzen::html(p),
         Some(p) if p.starts_with("/kirka") => routes::kirka::html(p),
-        Some(p) if p.starts_with("/vectaria") => routes::vectaria::html(p),
         Some(p) if p.starts_with("/redline") => routes::redline::html(p),
+        Some(p) if p.starts_with("/vectaria") => routes::vectaria::html(p),
+        Some(p) if p.starts_with("/voxiom") => routes::voxiom::html(p),
         Some(p) if p.starts_with("/voxtulate") => routes::voxtulate::html(p),
         Some(p) => routes::tricko::html(p),
         _ => default_html(),

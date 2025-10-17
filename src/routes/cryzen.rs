@@ -4,7 +4,7 @@ fn base(name: &str, desc: &str) -> String {
     create_html(name, desc, "/icons/games/cryzen.png", "#443d35")
 }
 
-// Not fully implemented yet: dynamic check for /cryzen/leaderboard/?query
+// Not fully implemented yet: dynamic check for /cryzen/leaderboard/parameters?query
 pub fn html(path: &str) -> String {
     match path {
         "/cryzen" => base(

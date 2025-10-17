@@ -23,11 +23,11 @@ pub fn html(path: &str) -> String {
             "View the latest updates for the Tricko Bot",
         ),
         "/terms" => base(
-            "Tricko Bot Changelog",
+            "Tricko.pro Terms of Service",
             "Before using Tricko.pro, review its Terms of Service",
         ),
         "/privacy" => base(
-            "Tricko Bot Changelog",
+            "Tricko.pro Privacy Policy",
             "Before using Tricko.pro, review its Privacy Policy",
         ),
         _ => default_html(),
