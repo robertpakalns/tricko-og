@@ -29,16 +29,23 @@ pub fn default_html(path: &str) -> String {
 }
 
 pub fn get_html(path: Option<&str>, query: Vec<(&str, &str)>) -> String {
-    let path = path.unwrap_or("/").trim_end_matches('/');
+    let mut path = path.unwrap_or("/").to_string();
 
-    println!("get_html: '{path}'");
+    while path.contains("//") {
+        path = path.replace("//", "/");
+    }
+
+    if path.len() > 1 {
+        path = path.trim_end_matches('/').to_string();
+    }
+
     match path {
-        p if p.starts_with("/cryzen") => routes::cryzen::html(p, query),
-        p if p.starts_with("/kirka") => routes::kirka::html(p),
-        p if p.starts_with("/redline") => routes::redline::html(p),
-        p if p.starts_with("/vectaria") => routes::vectaria::html(p),
-        p if p.starts_with("/voxiom") => routes::voxiom::html(p, query),
-        p if p.starts_with("/voxtulate") => routes::voxtulate::html(p),
-        p => routes::tricko::html(p),
+        p if p.starts_with("/cryzen") => routes::cryzen::html(&p, query),
+        p if p.starts_with("/kirka") => routes::kirka::html(&p),
+        p if p.starts_with("/redline") => routes::redline::html(&p),
+        p if p.starts_with("/vectaria") => routes::vectaria::html(&p),
+        p if p.starts_with("/voxiom") => routes::voxiom::html(&p, query),
+        p if p.starts_with("/voxtulate") => routes::voxtulate::html(&p),
+        p => routes::tricko::html(&p),
     }
 }
