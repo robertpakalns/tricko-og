@@ -5,6 +5,7 @@ use std::{
 
 mod generate_html;
 mod parse_raw_path;
+mod routes;
 
 fn handle_client(mut stream: TcpStream) {
     let mut buffer = [0; 1024];
