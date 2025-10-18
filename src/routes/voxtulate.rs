@@ -9,7 +9,7 @@ pub fn html(path: &str) -> String {
         "/voxtulate" => base(
             path,
             "Voxtulate Client",
-            "Unofficial Electron client for Voxiom.io",
+            "Unofficial Electron client for Voxiom.io. Supports Windows, macOS, and Linux",
         ),
         "/voxtulate/changelog" => base(
             path,

@@ -10,6 +10,7 @@ pub fn create_html(path: &str, title: &str, desc: &str, img: &str, color: &str) 
                 <meta property=\"og:description\" content=\"{desc}\" />\
                 <meta property=\"og:image\" content=\"{}\" />\
                 <meta property=\"og:url\" content=\"{}\" />\
+                <meta property=\"og:type\" content=\"website\" />\
                 <meta name=\"theme-color\" content=\"{color}\" />\
             </head>\
         </html>",
@@ -28,18 +29,24 @@ pub fn default_html(path: &str) -> String {
     )
 }
 
+pub fn normalize_path(path: &str) -> String {
+    let mut p = path.to_string();
+
+    // Replace all double slashes
+    // Apache adds double slashes at the beginning of the path
+    while p.contains("//") {
+        p = p.replace("//", "/");
+    }
+
+    if p.len() > 1 {
+        p = p.trim_end_matches('/').to_string();
+    }
+
+    p
+}
+
 pub fn get_html(path: Option<&str>, query: Vec<(&str, &str)>) -> String {
-    let mut path = path.unwrap_or("/").to_string();
-
-    while path.contains("//") {
-        path = path.replace("//", "/");
-    }
-
-    if path.len() > 1 {
-        path = path.trim_end_matches('/').to_string();
-    }
-
-    match path {
+    match normalize_path(path.unwrap_or("/")) {
         p if p.starts_with("/cryzen") => routes::cryzen::html(&p, query),
         p if p.starts_with("/kirka") => routes::kirka::html(&p),
         p if p.starts_with("/redline") => routes::redline::html(&p),

@@ -36,6 +36,11 @@ pub fn html(path: &str) -> String {
             "Tricko.pro Privacy Policy",
             "Before using Tricko.pro, review its Privacy Policy",
         ),
+        "/discord" => base(
+            path,
+            "Tricko.pro Discord Server",
+            "Join the Tricko.pro community on Discord",
+        ),
         _ => default_html(path),
     }
 }

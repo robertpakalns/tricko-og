@@ -30,7 +30,7 @@ pub fn html(path: &str) -> String {
                     base(
                         path,
                         &format!("#{id_up}"),
-                        &format!("View stats for Kirka.io player with short ID #{id_up}"),
+                        &format!("View stats for Kirka.io player with ID #{id_up}"),
                     )
                 }
                 _ => base(

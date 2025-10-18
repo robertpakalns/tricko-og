@@ -9,7 +9,7 @@ pub fn html(path: &str) -> String {
         "/redline" => base(
             path,
             "Redline Client",
-            "Unofficial Electron client for Kirka.io",
+            "Unofficial Electron client for Kirka.io. Supports Windows, macOS, and Linux",
         ),
         "/redline/changelog" => base(
             path,
