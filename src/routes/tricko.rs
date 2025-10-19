@@ -1,7 +1,7 @@
 use crate::generate_html::{create_html, default_html};
 
 fn base(path: &str, name: &str, desc: &str) -> String {
-    create_html(path, name, desc, "/logo/favicon-32x32.png", "#000000")
+    create_html(path, name, desc, "/assets/icon.webp", "#000000")
 }
 
 pub fn html(path: &str) -> String {
