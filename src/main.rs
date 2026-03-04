@@ -1,4 +1,5 @@
 use std::{
+    env,
     io::{Read, Write},
     net::{TcpListener, TcpStream},
 };
@@ -42,8 +43,15 @@ fn handle_client(mut stream: TcpStream) {
 }
 
 fn main() {
-    let listener = TcpListener::bind("0.0.0.0:6601").expect("Failed to bind to port 6601");
-    println!("Server running on http://localhost:6601");
+    dotenvy::dotenv().ok();
+
+    let ip = env::var("ADDRESS").expect("ADDRESS variable must be set");
+    let port = env::var("PORT").expect("PORT variable must be set");
+
+    let addr = format!("{ip}:{port}");
+
+    let listener = TcpListener::bind(&addr).expect(&format!("Failed to bind to port {port}"));
+    println!("Server running on http://{addr}");
 
     for stream in listener.incoming() {
         match stream {

@@ -2,3 +2,15 @@
 name = "tricko-og"
 version = "0.1.0"
 edition = "2024"
+
+[profile.release]
+panic = "abort"
+codegen-units = 1
+lto = true
+opt-level = "s"
+strip = "symbols"
+debug = false
+debug-assertions = false
+
+[dependencies]
+dotenvy = { version = "0.15.7", default-features = false }
